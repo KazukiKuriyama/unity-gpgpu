@@ -1,0 +1,12 @@
+#pragma kernel CSMain // 本コンピュートシェーダのカーネル
+
+#define ThreadBlockSize 12 // スレッドブロックのサイズ
+
+RWStructuredBuffer<float> Result; // GPUとCPU間でデータの読み書きを行う構造化バッファ
+
+[numthreads(ThreadBlockSize, 1, 1)] // スレッドブロックのサイズは、X方向に"ThreadBlockSize"(つまり、12)のスレッド、Y方向およびZ方向に1のスレッドを持つ。
+
+void CSMain (uint id : SV_DispatchThreadID) // "CSMain"は、本カーネルのメイン関数であり、スレッドIDを引数として受け取る。
+{
+    Result[id] += 1; // 構造化バッファ"Result"の、スレッドIDに対応する要素に1を加える。
+}
